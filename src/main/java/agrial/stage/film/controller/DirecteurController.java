@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/directeurs")
-@Tag(name = "directeurs", description = "Gestion des directeurs")
+@RequestMapping("/directeurs")
+@Tag(name = "Directeurs", description = "Gestion des directeurs")
 public class DirecteurController {
 
     @Autowired

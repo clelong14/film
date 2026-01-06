@@ -1,5 +1,6 @@
 package agrial.stage.film.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import agrial.stage.film.model.Directeur;
@@ -7,6 +8,7 @@ import agrial.stage.film.model.Type;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @Entity
@@ -37,4 +39,8 @@ public class Film {
     @ManyToOne
     @JoinColumn(name = "type_id")
     private Type type;
+
+    @OneToMany(mappedBy = "film")
+    @JsonIgnore
+    private List<Seance> seances;
 }

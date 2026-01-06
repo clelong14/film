@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/types")
-@Tag(name = "types", description = "Gestion des genres cinématographiques")
+@RequestMapping("/types")
+@Tag(name = "Types", description = "Gestion des genres cinématographiques")
 public class TypeController {
 
     @Autowired
