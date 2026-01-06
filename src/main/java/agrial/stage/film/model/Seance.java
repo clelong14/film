@@ -1,5 +1,6 @@
 package agrial.stage.film.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
@@ -16,9 +17,9 @@ public class Seance {
     private Double prix;
     private Integer placesDisponibles;
     private String description;
-    private String imagePath;
 
     @ManyToOne
     @JoinColumn(name = "film_id")
+    @JsonBackReference
     private Film film;
 }

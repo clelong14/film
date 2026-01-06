@@ -1,6 +1,7 @@
 package agrial.stage.film.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.Data;
 import agrial.stage.film.model.Directeur;
@@ -30,6 +31,11 @@ public class Film {
     @Column(name = "duree")
     private String duree;
 
+    private String imagePath;
+
+    @Column(columnDefinition = "TEXT")
+    private String synopsis;
+
     @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "directeur_id")
@@ -40,7 +46,7 @@ public class Film {
     @JoinColumn(name = "type_id")
     private Type type;
 
-    @OneToMany(mappedBy = "film")
-    @JsonIgnore
+    @OneToMany(mappedBy = "film", fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Seance> seances;
 }
