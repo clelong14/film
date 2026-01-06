@@ -5,8 +5,8 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name = "directeur")
-public class Directeur {
+@Table(name = "producteur")
+public class Producteur {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -19,4 +19,9 @@ public class Directeur {
 
     @Column(name = "date_naissance")
     private String dateNaissance;
+
+    @ManyToOne
+    @JoinColumn(name = "directeur_id")
+
+    private Directeur directeur;
 }
