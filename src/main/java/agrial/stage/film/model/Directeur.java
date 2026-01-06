@@ -1,7 +1,10 @@
 package agrial.stage.film.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -19,4 +22,8 @@ public class Directeur {
 
     @Column(name = "date_naissance")
     private String dateNaissance;
+
+    @OneToMany(mappedBy = "directeur")
+    @JsonIgnore
+    private List<Film> films;
 }

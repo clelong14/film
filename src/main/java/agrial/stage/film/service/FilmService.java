@@ -21,7 +21,7 @@ public class FilmService {
     }
 
     public List<Film> findByNom(String nom) {
-        return filmRepository.findByDirecteur_Nom(nom);
+        return filmRepository.findByDirecteurNomIgnoreSpaces(nom);
     }
 
     public List<Film> getFilmsParDirecteur(Integer id) {
