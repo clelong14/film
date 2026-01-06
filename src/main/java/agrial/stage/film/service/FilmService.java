@@ -14,6 +14,9 @@ public class FilmService {
     @Autowired
     private FilmRepository filmRepository;
 
+    public List<Film> getAllFilms() {
+        return filmRepository.findAll();
+    }
 
     public Film saveFilm(Film film) {
         Film savedFilm = filmRepository.save(film);

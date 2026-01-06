@@ -17,7 +17,13 @@ public class FilmController {
     @Autowired
     private FilmService filmService;
 
-    @PostMapping("/")
+    @GetMapping("/")
+    @Operation(summary = "Liste de tous les films")
+    public List<Film> findAll() {
+        return filmService.getAllFilms();
+    }
+
+    @PostMapping("/create")
     @Operation(summary = "Création de film")
     public Film createFilm(@RequestBody Film film) {
         return filmService.saveFilm(film);
