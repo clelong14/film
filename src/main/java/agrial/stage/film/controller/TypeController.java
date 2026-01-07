@@ -2,6 +2,7 @@ package agrial.stage.film.controller;
 
 import agrial.stage.film.model.Film;
 import agrial.stage.film.model.Type;
+import agrial.stage.film.repository.TypeRepository;
 import agrial.stage.film.service.TypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -12,11 +13,15 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/types")
+@CrossOrigin(origins = "*")
 @Tag(name = "Types", description = "Gestion des genres cinématographiques")
 public class TypeController {
 
     @Autowired
     private TypeService typeService;
+
+    @Autowired
+    private TypeRepository typeRepository;
 
     @PostMapping("/")
     @Operation(summary = "Créer un nouveau genre")
@@ -35,4 +40,11 @@ public class TypeController {
     public List<Type> getTypeParFilm(@PathVariable Integer filmId) {
         return typeService.getTypeParFilm(filmId);
     }
+
+    @GetMapping
+    @Operation(summary = "Récupérer tous les genres")
+    public List<Type> getAllTypes() {
+        return typeRepository.findAll();
+    }
+
 }
