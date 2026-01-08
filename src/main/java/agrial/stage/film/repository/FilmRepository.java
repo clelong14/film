@@ -1,17 +1,22 @@
 package agrial.stage.film.repository;
 
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
-import org.springframework.stereotype.Repository;
 import agrial.stage.film.model.Film;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
 
 public interface FilmRepository extends JpaRepository<Film, Integer> {
-    @Query("SELECT f FROM Film f WHERE REPLACE(f.directeur.nom, ' ', '') ILIKE REPLACE(:nom, ' ', '')")
-    List<Film> findByDirecteurNomIgnoreSpaces(@Param("nom") String nom);
+
+    @Query("SELECT DISTINCT f FROM Film f " +
+            "LEFT JOIN FETCH f.directeur d " +
+            "LEFT JOIN FETCH f.producteur p " +
+            "LEFT JOIN FETCH f.type t")
+    List<Film> findAllWithDetails();
+
+    List<Film> findByType_Libelle(String libelle);
 
     List<Film> findByDirecteur_Id(Integer id);
 
+    List<Film> findByNom(String nom);
 }

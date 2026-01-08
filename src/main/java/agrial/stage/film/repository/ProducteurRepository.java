@@ -11,11 +11,8 @@ import java.util.List;
 @Repository
 public interface ProducteurRepository extends JpaRepository<Producteur, Integer> {
 
-    @Query("SELECT p FROM Producteur p " +
-            "JOIN p.directeur d " +
-            "JOIN d.films f " +
-            "WHERE REPLACE(f.nom, ' ', '') ILIKE REPLACE(:nom, ' ', '')")
+    @Query("SELECT p FROM Producteur p WHERE REPLACE(p.nom, ' ', '') ILIKE REPLACE(:nom, ' ', '')")
     List<Producteur> findByNomSansEspace(@Param("nom") String nom);
 
-    List<Producteur> findByDirecteur_Id(Integer id);
+    List<Producteur> findByFilms_Id(Integer id);
 }

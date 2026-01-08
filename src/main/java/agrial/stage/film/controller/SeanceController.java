@@ -1,6 +1,8 @@
 package agrial.stage.film.controller;
 
 import agrial.stage.film.model.Seance;
+import agrial.stage.film.model.dto.DirecteurDTO;
+import agrial.stage.film.model.dto.SeanceDTO;
 import agrial.stage.film.service.SeanceService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/seances")
@@ -16,6 +19,12 @@ public class SeanceController {
 
     @Autowired
     private SeanceService seanceService;
+
+    @GetMapping("/{seanceId}")
+    @Operation(summary = "Récupérer une séance par son ID")
+    public Optional<SeanceDTO> getSeanceDTO(@PathVariable int seanceId) {
+        return seanceService.getSeanceDTO(seanceId);
+    }
 
     @PostMapping("/")
     @Operation(summary = "Créer une séance")

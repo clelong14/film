@@ -1,5 +1,6 @@
 package agrial.stage.film.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
@@ -20,6 +21,6 @@ public class Type {
     private String libelle;
 
     @OneToMany(mappedBy = "type")
-    @JsonIgnore
+    @JsonBackReference("film-type")
     private List<Film> films;
 }

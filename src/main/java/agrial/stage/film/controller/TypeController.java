@@ -2,7 +2,8 @@ package agrial.stage.film.controller;
 
 import agrial.stage.film.model.Film;
 import agrial.stage.film.model.Type;
-import agrial.stage.film.repository.TypeRepository;
+import agrial.stage.film.model.dto.SeanceDTO;
+import agrial.stage.film.model.dto.TypeDTO;
 import agrial.stage.film.service.TypeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/types")
@@ -20,8 +22,16 @@ public class TypeController {
     @Autowired
     private TypeService typeService;
 
-    @Autowired
-    private TypeRepository typeRepository;
+    @GetMapping("/all")
+    public List<TypeDTO> getAllType() {
+        return typeService.getAllTypesDTO();
+    }
+
+    @GetMapping("/{typeId}")
+    @Operation(summary = "Récupérer une séance par son ID")
+    public Optional<TypeDTO> getTypeDTO(@PathVariable int typeId) {
+        return typeService.getTypeDTO(typeId);
+    }
 
     @PostMapping("/")
     @Operation(summary = "Créer un nouveau genre")
@@ -40,11 +50,4 @@ public class TypeController {
     public List<Type> getTypeParFilm(@PathVariable Integer filmId) {
         return typeService.getTypeParFilm(filmId);
     }
-
-    @GetMapping
-    @Operation(summary = "Récupérer tous les genres")
-    public List<Type> getAllTypes() {
-        return typeRepository.findAll();
-    }
-
 }

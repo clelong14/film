@@ -14,7 +14,6 @@ public class Seance {
 
     private LocalDateTime dateHeure;
     private String salle;
-    private Double prix;
     private Integer placesDisponibles;
     private String description;
 

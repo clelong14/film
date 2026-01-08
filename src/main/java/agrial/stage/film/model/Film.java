@@ -36,17 +36,21 @@ public class Film {
     @Column(columnDefinition = "TEXT")
     private String synopsis;
 
-    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "directeur_id")
+    @JsonManagedReference("film-directeur")
     private Directeur directeur;
 
-    @ToString.Exclude
     @ManyToOne
     @JoinColumn(name = "type_id")
+    @JsonManagedReference("film-type")
     private Type type;
 
-    @OneToMany(mappedBy = "film", fetch = FetchType.EAGER)
-    @JsonManagedReference
+    @ManyToOne
+    @JoinColumn(name = "producteur_id")
+    @JsonManagedReference("film-producteur")
+    private Producteur producteur;
+
+    @OneToMany(mappedBy = "film")
     private List<Seance> seances;
 }

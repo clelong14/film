@@ -1,7 +1,11 @@
 package agrial.stage.film.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Data
 @Entity
@@ -20,8 +24,7 @@ public class Producteur {
     @Column(name = "date_naissance")
     private String dateNaissance;
 
-    @ManyToOne
-    @JoinColumn(name = "directeur_id")
-
-    private Directeur directeur;
+    @OneToMany(mappedBy = "producteur")
+    @JsonBackReference("film-producteur")
+    private List<Film> films;
 }
