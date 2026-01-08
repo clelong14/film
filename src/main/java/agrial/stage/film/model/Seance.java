@@ -21,4 +21,9 @@ public class Seance {
     @JoinColumn(name = "film_id")
     @JsonBackReference
     private Film film;
+
+    @ManyToOne
+    @JoinColumn(name = "cinema_id")
+    @JsonBackReference
+    private Cinema cinema;
 }
