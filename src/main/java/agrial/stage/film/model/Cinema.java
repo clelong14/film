@@ -1,10 +1,11 @@
 package agrial.stage.film.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jakarta.persistence.*;
 import lombok.Data;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -19,4 +20,9 @@ public class Cinema {
     private String adresse;
     private Integer telephone;
     private String email;
+
+    @OneToMany(mappedBy = "cinema")
+    @JsonIgnoreProperties("cinema")
+    @JsonBackReference
+    private List<Seance> seances;
 }

@@ -6,23 +6,47 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Controller
+@RestController
 @RequestMapping("/cinemas")
 @CrossOrigin(origins = "*")
-@Tag(name = "Cinemas", description = "Gestion des cinemas")
+@Tag(name = "Cinemas", description = "Gestion des cinémas")
 public class CinemaController {
+
     @Autowired
     private CinemaService cinemaService;
 
-    @GetMapping
-    @Operation(summary = "Liste de tous les films")
+    @GetMapping("/")
+    @Operation(summary = "Liste de tous les cinémas")
     public List<Cinema> findAll() {
         return cinemaService.getAllCinemas();
+    }
+
+    @GetMapping("/{id}")
+    @Operation(summary = "Récupérer un cinéma par son ID")
+    public Cinema findById(@PathVariable Integer id) {
+        return cinemaService.getCinemaById(id);
+    }
+
+    @PostMapping("/")
+    @Operation(summary = "Ajouter un nouveau cinéma")
+    public Cinema create(@RequestBody Cinema cinema) {
+        return cinemaService.saveCinema(cinema);
+    }
+
+    @PutMapping("/{id}")
+    @Operation(summary = "Modifier un cinéma existant")
+    public Cinema update(@PathVariable Integer id, @RequestBody Cinema cinema) {
+        cinema.setId(id); // On s'assure que l'ID est le bon
+        return cinemaService.saveCinema(cinema);
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Supprimer un cinéma")
+    public void delete(@PathVariable Integer id) {
+        cinemaService.deleteCinema(id);
     }
 }
