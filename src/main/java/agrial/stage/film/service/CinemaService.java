@@ -17,18 +17,19 @@ public class CinemaService {
         return cinemaRepository.findAll();
     }
 
-    // Récupérer par ID
     public Cinema getCinemaById(Integer id) {
         return cinemaRepository.findById(id).orElse(null);
     }
 
-    // Créer ou Modifier
     public Cinema saveCinema(Cinema cinema) {
         return cinemaRepository.save(cinema);
     }
 
-    // Supprimer
     public void deleteCinema(Integer id) {
         cinemaRepository.deleteById(id);
+    }
+
+    public List<Cinema> findByCityOrZip(Integer cpostal) {
+        return cinemaRepository.findByCityOrZip(String.valueOf(cpostal));
     }
 }

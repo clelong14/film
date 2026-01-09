@@ -1,6 +1,7 @@
 package agrial.stage.film.controller;
 
 import agrial.stage.film.model.Cinema;
+import agrial.stage.film.repository.CinemaRepository;
 import agrial.stage.film.service.CinemaService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -18,6 +19,9 @@ public class CinemaController {
 
     @Autowired
     private CinemaService cinemaService;
+
+    @Autowired
+    private CinemaRepository cinemaRepository;
 
     @GetMapping("/")
     @Operation(summary = "Liste de tous les cinémas")
@@ -48,5 +52,10 @@ public class CinemaController {
     @Operation(summary = "Supprimer un cinéma")
     public void delete(@PathVariable Integer id) {
         cinemaService.deleteCinema(id);
+    }
+
+    @GetMapping("/search")
+    public List<Cinema> search(@RequestParam(name = "cpostal") String cpostal) {
+        return cinemaService.findByCityOrZip(Integer.valueOf(cpostal));
     }
 }
