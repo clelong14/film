@@ -21,30 +21,31 @@ public class UtilisateurService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    // Récupérer un utilisateur par son ID (pour la page profil)
     public Optional<UtilisateurDTO> getUtilisateurDTO(Integer id) {
         return utilisateurRepository.findById(id)
                 .map(UtilisateurMapper::toDTO);
     }
 
-    // Créer un nouvel utilisateur (Inscription)
     public UtilisateurDTO createUtilisateur(Utilisateur utilisateur) {
-        // Optionnel : vérifier si l'email existe déjà
         if(utilisateurRepository.findByEmail(utilisateur.getEmail()).isPresent()) {
             throw new RuntimeException("Cet email est déjà utilisé");
         }
+
+        String encodedPassword = passwordEncoder.encode(utilisateur.getMotDePasse());
+        utilisateur.setMotDePasse(encodedPassword);
+        // --------------------------------------------------
+
         Utilisateur saved = utilisateurRepository.save(utilisateur);
         return UtilisateurMapper.toDTO(saved);
     }
 
-    // Logique de login
     public Optional<UtilisateurDTO> login(String email, String password) {
         return utilisateurRepository.findByEmail(email)
-                .filter(u -> u.getMotDePasse().equals(password)) // À remplacer par BCrypt plus tard
+                .filter(u -> passwordEncoder.matches(password, u.getMotDePasse())) // MODIFICATION : matches au lieu de equals
                 .map(UtilisateurMapper::toDTO);
     }
 
-    // Lister tous les utilisateurs (Admin)
+    // Lister tous les utilisateurs
     public List<UtilisateurDTO> getAllUtilisateursDTO() {
         return utilisateurRepository.findAll()
                 .stream()
