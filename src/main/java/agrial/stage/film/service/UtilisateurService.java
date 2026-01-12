@@ -4,6 +4,7 @@ import agrial.stage.film.model.Utilisateur;
 import agrial.stage.film.model.dto.UtilisateurDTO;
 import agrial.stage.film.model.mapper.UtilisateurMapper;
 import agrial.stage.film.repository.UtilisateurRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -51,5 +52,14 @@ public class UtilisateurService {
                 .stream()
                 .map(UtilisateurMapper::toDTO)
                 .collect(Collectors.toList());
+    }
+
+    public boolean utilisateurExists(Integer id) {
+    return utilisateurRepository.existsById(id);
+    }
+
+    @Transactional
+    public void deleteUtilisateur(Integer id) {
+        utilisateurRepository.deleteById(id);
     }
 }

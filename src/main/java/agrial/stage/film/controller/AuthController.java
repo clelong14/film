@@ -2,7 +2,7 @@ package agrial.stage.film.controller;
 
 import agrial.stage.film.model.Utilisateur;
 import agrial.stage.film.model.dto.UtilisateurDTO;
-import agrial.stage.film.repository.UtilisateurRepository;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import agrial.stage.film.service.UtilisateurService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -34,5 +34,21 @@ public class AuthController {
     @Operation (summary = "Inscription d'un utilisateur")
     public UtilisateurDTO register(@RequestBody Utilisateur utilisateur) {
         return utilisateurService.createUtilisateur(utilisateur);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public ResponseEntity<?> deleteAccount(@PathVariable Integer id) {
+        try {
+            if (!utilisateurService.utilisateurExists(id)) {
+                return ResponseEntity.notFound().build();
+            }
+
+            utilisateurService.deleteUtilisateur(id);
+
+            return ResponseEntity.ok().body("{\"message\": \"Compte supprimé avec succès\"}");
+        } catch (Exception e) {
+            return ResponseEntity.internalServerError()
+                    .body("{\"error\": \"Erreur lors de la suppression du compte\"}");
+        }
     }
 }
